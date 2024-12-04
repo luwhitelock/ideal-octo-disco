@@ -1,0 +1,169 @@
+```{r}
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Create the data
+data <- data.frame(
+  Year = 2016:2023,
+  `15-24` = c(17.8, 18.4, 18.2, 17.0, 20.6, 17.5, 19.4, 16.9),
+  `25-34` = c(15.2, 13.8, 14.1, 13.4, 13.5, 13.6, 13.3, 14.3),
+  `35-49` = c(22.6, 20.5, 18.8, 17.4, 16.4, 18.2, 18.5, 16.1),
+  `50+` = c(30.8, 32.4, 33.2, 35.1, 32.5, 35.6, 34.0, 37.7)
+)
+
+# Reshape the data to long format
+data_long <- data %>%
+  pivot_longer(cols = -Year, names_to = "Age_Group", values_to = "Percentage")
+
+# Plot the data
+ggplot(data_long, aes(x = Year, y = Percentage, color = Age_Group)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Evolution de la frequentation de cinéma en PACA selon les groupes d'age (2016-2023)",
+    x = "Année",
+    y = "Pourcentage (%)",
+    color = "Groupes d'ages"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 7, face = "bold"),
+    axis.title = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 8, face = "bold")
+  )
+
+```
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Créer le dataframe pour PACA
+data_paca <- data.frame(
+  Année = 2016:2023,
+  CSP_Plus = c(33.0, 33.0, 32.5, 31.8, 27.3, 29.9, 27.9, 26.1),
+  CSP_Moins = c(23.7, 22.7, 23.3, 21.9, 25.1, 24.6, 27.2, 25.2),
+  Inactifs = c(43.2, 44.3, 44.2, 46.3, 47.6, 45.5, 44.9, 48.7)
+)
+
+# Transformer les données pour le graphe
+data_long <- data_paca %>%
+  pivot_longer(cols = -Année, names_to = "Categorie", values_to = "Pourcentage")
+
+# Définir les couleurs personnalisées
+custom_colors <- c(
+  "CSP_Plus" = "orange",  # Blue
+  "CSP_Moins" = "brown", # Orange
+  "Inactifs" = "red"
+)
+
+# Changer les noms des catégories pour l'affichage
+custom_labels <- c(
+  "CSP_Plus" = "CSP Supérieur", 
+"CSP_Moins" = "CSP Inférieur", 
+"Inactifs" = "Inactifs"
+)
+
+# Graphe avec les noms modifiés
+ggplot(data_long, aes(x = Année, y = Pourcentage, color = Categorie)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(values = custom_colors, labels = custom_labels) + # Couleurs et labels
+  labs(
+    title = "Fréquentation des cinémas en Provence-Alpes-Côte d'Azur par Catégorie Socio-Professionnelle (2016-2023)",
+    x = "Année",
+    y = "Pourcentage (%)",
+    color = "Catégorie"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 8, face = "bold"),
+    axis.title = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 8, face = "bold")
+  )
+
+```
+
+GRAPHE CSP +
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(tidyr)
+
+# Create the data frame
+data <- data.frame(
+  Year = 2016:2023,
+  `Bourgogne - Franche-Comté` = c(27.3, 28.3, 29.8, 26.9, 23.4, 21.9, 25.5, 25.2),
+  `Provence-Alpes-Côte d'Azur` = c(33.0, 33.0, 32.5, 31.8, 27.3, 29.9, 27.9, 26.1)
+)
+
+# Reshape the data to long format
+data_long <- pivot_longer(data, cols = -Year, names_to = "Region", values_to = "Percentage")
+
+# Plot the graph with percentage labels
+ggplot(data_long, aes(x = Year, y = Percentage, color = Region, group = Region)) +
+  geom_line(size = 1) +
+  geom_point(size = 3) +
+  geom_text(aes(label = sprintf("%.1f", Percentage)), vjust = -0.5, size = 3.5) +
+  scale_color_manual(values = c("steelblue", "darkorange")) +
+  labs(
+    title = "Evolution des CSP+ dans la frequentation des cinémas de PACA & BFC (2016-2023)",
+    x = "Année",
+    y = "Pourcentage (%)",
+    color = "Région"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 7, face = "bold"),
+    axis.title = element_text(size = 8, face = "bold"),
+    axis.text = element_text(size = 8, face = "bold"),
+    legend.title = element_text(size = 8, face = "bold"),
+    legend.text = element_text(size = 8, face = "bold")
+  )
+
+
+```
+
+GRAPHE CSP -
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(tidyr)
+
+# Create the data frame for CSP-
+data_csp_minus <- data.frame(
+  Year = 2016:2023,
+  `Bourgogne - Franche-Comté` = c(28.2, 28.0, 26.6, 24.3, 30.6, 29.6, 32.4, 28.7),
+  `Provence-Alpes-Côte d'Azur` = c(23.7, 22.7, 23.3, 21.9, 25.1, 24.6, 27.2, 25.2)
+)
+
+# Reshape the data to long format
+data_csp_minus_long <- pivot_longer(data_csp_minus, cols = -Year, names_to = "Region", values_to = "Percentage")
+
+# Plot the graph with percentage labels
+ggplot(data_csp_minus_long, aes(x = Year, y = Percentage, color = Region, group = Region)) +
+  geom_line(size = 1) +
+  geom_point(size = 3) +
+  geom_text(aes(label = sprintf("%.1f", Percentage)), vjust = -0.5, size = 3.5) +
+  scale_color_manual(values = c("darkgreen", "darkblue")) +
+  labs(
+    title = "Evolution des CSP- dans la frequentation des cinémas de PACA & BFC (2016-2023)",
+    x = "Année",
+    y = "Pourcentage (%)",
+    color = "Région"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 7, face = "bold"),
+    axis.title = element_text(size = 8,  face = "bold"),
+    axis.text = element_text(size = 8,  face = "bold"),
+    legend.title = element_text(size = 8,  face = "bold"),
+    legend.text = element_text(size = 8,  face = "bold")
+  )
+
+```
+
+
